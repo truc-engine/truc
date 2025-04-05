@@ -6,5 +6,5 @@ import (
 )
 
 func main() {
-	gateway.StartServer(common.Engine, "9999")
+	gateway.StartServer(common.Engine, common.Parmas.GatewayPort)
 }

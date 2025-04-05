@@ -36,7 +36,7 @@ func StartServer(engine *e.Engine, port string) {
 			http.Error(w, err.Error(), http.StatusInternalServerError)
 			return
 		}
-		c := new(ContextResponse)
+		c := new(ContextResponse[any])
 		err = json.Unmarshal(res.Data, &c)
 		if err != nil {
 			http.Error(w, err.Error(), http.StatusInternalServerError)
