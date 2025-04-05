@@ -23,6 +23,7 @@ const (
 
 type UserPingRequest struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
+	Name          string                 `protobuf:"bytes,1,opt,name=name,proto3" json:"name,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -55,6 +56,13 @@ func (x *UserPingRequest) ProtoReflect() protoreflect.Message {
 // Deprecated: Use UserPingRequest.ProtoReflect.Descriptor instead.
 func (*UserPingRequest) Descriptor() ([]byte, []int) {
 	return file_common_dto_dto_user_feature_ping_ping_dto_proto_rawDescGZIP(), []int{0}
+}
+
+func (x *UserPingRequest) GetName() string {
+	if x != nil {
+		return x.Name
+	}
+	return ""
 }
 
 type UserPingResponse struct {
@@ -105,8 +113,9 @@ var File_common_dto_dto_user_feature_ping_ping_dto_proto protoreflect.FileDescri
 
 const file_common_dto_dto_user_feature_ping_ping_dto_proto_rawDesc = "" +
 	"\n" +
-	"/common/dto/dto_user_feature_ping_ping.dto.proto\x12\x03dto\"\x11\n" +
-	"\x0fUserPingRequest\",\n" +
+	"/common/dto/dto_user_feature_ping_ping.dto.proto\x12\x03dto\"%\n" +
+	"\x0fUserPingRequest\x12\x12\n" +
+	"\x04name\x18\x01 \x01(\tR\x04name\",\n" +
 	"\x10UserPingResponse\x12\x18\n" +
 	"\amessage\x18\x01 \x01(\tR\amessageB\aZ\x05./dtob\x06proto3"
 

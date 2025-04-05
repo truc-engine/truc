@@ -4,6 +4,6 @@ package dto;
 
 option go_package = "./dto";
 
-message UserPingRequest {}
+message UserPingRequest { string name = 1; }
 
 message UserPingResponse { string message = 1; }

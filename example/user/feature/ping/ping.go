@@ -4,11 +4,15 @@ import (
 	"github.com/truc-engine/truc/engine"
 	"github.com/truc-engine/truc/example/common"
 	"github.com/truc-engine/truc/example/common/dto"
-	"github.com/truc-engine/truc/gateway"
+	"github.com/truc-engine/truc/util"
+	"go.uber.org/zap"
 )
 
 func init() {
-	gateway.RegisterEndpoint(common.Engine, "/user/ping", Ping)
+	engine.RegisterEndpoint(common.Engine, "/user/ping", Ping)
+	engine.RegisterEventHandler("user.ping", func(payload *dto.UserPingRequest) {
+		util.Logger.Info("User ping", zap.Any("payload", payload))
+	})
 }
 
 type Ctx = engine.Context[dto.UserPingRequest, dto.UserPingResponse]
