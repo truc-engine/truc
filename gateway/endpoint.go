@@ -10,14 +10,14 @@ import (
 	"go.uber.org/zap"
 )
 
-type Handler[I, O any] func(c *Context[I, O]) *ContextResponse[O]
+type Handler[I, O any] func(c *engine.Context[I, O]) *engine.Res[O]
 
 func RegisterEndpoint[I, O any](e *engine.Engine, url string, handler Handler[I, O]) {
 	url = engine.ParseEndpoint(url)
 	fmt.Println("Register endpoint: " + url)
 
 	_, err := e.Nats.QueueSubscribe(url, "API", func(msg *nats.Msg) {
-		c := new(Context[I, O])
+		c := new(engine.Context[I, O])
 		err := json.Unmarshal(msg.Data, &c)
 		if err != nil {
 			fmt.Println(err)

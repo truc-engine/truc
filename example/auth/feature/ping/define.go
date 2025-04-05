@@ -1,13 +1,17 @@
 package feature
 
-import "github.com/truc-engine/truc/gateway"
+import (
+	"github.com/truc-engine/truc/engine"
+)
 
-type PingRequest struct {
+type AuthPingRequest struct {
 	Message string `json:"message"`
 }
 
-type PingResponse struct {
+type AuthPingResponse struct {
 	Message string `json:"message"`
 }
 
-type Ctx = gateway.Context[PingRequest, PingResponse]
+type Ctx = engine.Context[AuthPingRequest, AuthPingResponse]
+
+type CtxRes = engine.Res[AuthPingResponse]

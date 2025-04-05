@@ -2,6 +2,7 @@ package gateway
 
 import (
 	"encoding/json"
+	"fmt"
 	"net/http"
 	"time"
 
@@ -21,7 +22,7 @@ func StartServer(engine *e.Engine, port string) {
 			return
 		}
 
-		context := C{
+		context := e.C{
 			Url:     url,
 			Request: payload,
 			Id:      util.NewUuidV7(),
@@ -36,15 +37,21 @@ func StartServer(engine *e.Engine, port string) {
 			http.Error(w, err.Error(), http.StatusInternalServerError)
 			return
 		}
-		c := new(ContextResponse[any])
+
+		c := new(e.Res[any])
 		err = json.Unmarshal(res.Data, &c)
 		if err != nil {
 			http.Error(w, err.Error(), http.StatusInternalServerError)
 			return
 		}
+
+		fmt.Println(c)
 		w.Header().Set("Content-Type", "application/json")
+		w.WriteHeader(c.StatusCode)
 		json.NewEncoder(w).Encode(c)
 	})
 
 	http.ListenAndServe(":"+port, nil)
+
+	select {}
 }

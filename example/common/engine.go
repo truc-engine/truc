@@ -1,8 +1,6 @@
 package common
 
 import (
-	"fmt"
-
 	"github.com/truc-engine/truc/engine"
 	"github.com/truc-engine/truc/util"
 )
@@ -20,7 +18,6 @@ var Parmas = EngineParams{
 }
 
 func init() {
-	fmt.Println(Parmas)
 	var err error
 	Engine.Nats, err = engine.ConnectNats(Parmas.NatsUrl)
 	if err != nil {
