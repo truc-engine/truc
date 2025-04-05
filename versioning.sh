@@ -6,4 +6,5 @@ fi
 
 git tag $v
 git push origin $v
+cd framework
 GOPROXY=proxy.golang.org go list -m github.com/truc-engine/truc@$v
