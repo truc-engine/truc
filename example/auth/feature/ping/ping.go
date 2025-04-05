@@ -1,34 +1,30 @@
 package feature
 
 import (
-	"fmt"
-
 	"github.com/truc-engine/truc/engine"
 	"github.com/truc-engine/truc/example/common"
+	"github.com/truc-engine/truc/example/common/dto"
 	"github.com/truc-engine/truc/gateway"
+	"go.uber.org/zap"
 )
 
-type UserPingRequest struct {
-	Message string `json:"message"`
-}
+type Ctx = engine.Context[dto.AuthPingRequest, dto.AuthPingResponse]
 
-type UserPingResponse struct {
-	Message string `json:"message"`
-}
+type CtxRes = engine.Res[dto.AuthPingResponse]
 
 func init() {
 	gateway.RegisterEndpoint(common.Engine, "/auth/ping", Ping)
 }
 
 func Ping(c *Ctx) *CtxRes {
-	c.Logger.Info("Ping " + c.Id)
+	c.Logger.Info("Ping")
 
-	res, err := engine.SendRequest[UserPingRequest, UserPingResponse]("/user/pinzzg", &UserPingRequest{Message: c.Id})
+	userPingRes, err := engine.SendRequest[dto.UserPingRequest, dto.UserPingResponse]("/user/ping", &dto.UserPingRequest{})
 	if err != nil {
 		return c.ServerError()
 	}
-	c.Logger.Info(fmt.Sprintf("User ping response: %v", res.Ok))
-	c.Logger.Info(fmt.Sprintf("User ping response: %v", res.Data.Message))
 
-	return c.Ok(&AuthPingResponse{Message: c.Id})
+	c.Logger.Info("User ping response", zap.Any("userPingRes", userPingRes))
+
+	return c.Ok(&dto.AuthPingResponse{Message: c.Id})
 }

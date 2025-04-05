@@ -19,10 +19,10 @@ type Context[I, O any] struct {
 }
 
 type Res[O any] struct {
-	Data       *O     `json:"data"`
-	Ok         bool   `json:"ok"`
-	Code       string `json:"code"`
-	Message    string `json:"message"`
+	Data       *O
+	Ok         bool
+	Code       string
+	Message    string
 	StatusCode int
 }
 
@@ -30,7 +30,7 @@ func (c *Context[I, O]) Ok(data *O) *Res[O] {
 	res := &Res[O]{
 		Data:       data,
 		Ok:         true,
-		Code:       "200",
+		Code:       "OK",
 		Message:    "Success",
 		StatusCode: 200,
 	}

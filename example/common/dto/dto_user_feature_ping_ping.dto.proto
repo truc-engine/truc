@@ -1,0 +1,9 @@
+syntax = "proto3";
+
+package dto;
+
+option go_package = "./dto";
+
+message UserPingRequest {}
+
+message UserPingResponse { string message = 1; }
