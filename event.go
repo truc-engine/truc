@@ -8,27 +8,27 @@ import (
 	"google.golang.org/protobuf/proto"
 )
 
-func PublishEvent(event string, payload proto.Message) error {
+func (e *Engine) PublishEvent(event string, payload proto.Message) error {
 	data, err := json.Marshal(payload)
 	if err != nil {
 		return err
 	}
 
-	Nats.Publish("event."+event, data)
+	e.Nats.Publish("event."+event, data)
 
 	return nil
 }
 
-func RegisterEventHandler[I any](event string, handler func(payload *I)) {
+func (e *Engine) RegisterEventHandler(event string, handler func(payload any)) {
 	event = "event." + event
 	fmt.Println("Register event: " + event)
-	Nats.QueueSubscribe(event, "event", func(msg *nats.Msg) {
-		var c I
+	e.Nats.QueueSubscribe(event, "event", func(msg *nats.Msg) {
+		var c any
 		err := json.Unmarshal(msg.Data, &c)
 		if err != nil {
 			fmt.Println(err)
 			return
 		}
-		handler(&c)
+		handler(c)
 	})
 }

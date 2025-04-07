@@ -5,7 +5,7 @@ import (
 	"net/http"
 	"time"
 
-	e "github.com/truc-engine/truc/engine"
+	e "github.com/truc-engine/truc"
 	"github.com/truc-engine/truc/util"
 )
 
