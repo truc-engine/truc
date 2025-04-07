@@ -45,6 +45,16 @@ func SendRequest[I, O any](e *Engine, url string, payload *I) (*Res[O], error) {
 
 type Handler[I, O any] func(c *Context[I, O]) *Res[O]
 
+type ApiRegistration[I, O any] struct {
+	Url     string
+	Handler Handler[I, O]
+	Role    string
+}
+
+func (api *ApiRegistration[I, O]) Register(e *Engine) {
+	RegisterEndpoint(e, api.Url, api.Handler)
+}
+
 func RegisterEndpoint[I, O any](e *Engine, url string, handler Handler[I, O]) {
 	url = ParseEndpoint(url)
 	fmt.Println("Register endpoint: " + url)

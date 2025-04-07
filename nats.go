@@ -9,6 +9,8 @@ import (
 func (e *Engine) ConnectNats(url string) (*nats.Conn, error) {
 	if url == "" {
 		url = e.Params.Nats
+	} else {
+		e.Params.Nats = url
 	}
 	nc, err := nats.Connect(url)
 	if err != nil {
