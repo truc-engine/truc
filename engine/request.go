@@ -10,10 +10,17 @@ import (
 	"go.uber.org/zap"
 )
 
-func SendRequest[I, O any](url string, payload *I) (*Res[O], error) {
+type JsonContext struct {
+	Url      string
+	Request  any
+	Response any
+	Id       string
+}
+
+func SendRequest[I, O any](e *Engine, url string, payload *I) (*Res[O], error) {
 	url = ParseEndpoint(url)
 
-	context := C{
+	context := JsonContext{
 		Url:     url,
 		Request: payload,
 		Id:      util.NewUuidV7(),
@@ -22,7 +29,7 @@ func SendRequest[I, O any](url string, payload *I) (*Res[O], error) {
 	if err != nil {
 		return nil, err
 	}
-	res, err := Nats.Request(url, data, 600*time.Second)
+	res, err := e.Nats.Request(url, data, 600*time.Second)
 	if err != nil {
 		return nil, err
 	}

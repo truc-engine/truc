@@ -4,13 +4,6 @@ import (
 	"go.uber.org/zap"
 )
 
-type C struct {
-	Url      string
-	Request  any
-	Response any
-	Id       string
-}
-
 type Context[I, O any] struct {
 	Url     string
 	Request *I
